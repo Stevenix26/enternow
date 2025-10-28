@@ -90,8 +90,24 @@ section > div {
 /* More explicit card classes to style the new HTML structure */
 .stat-card {
   /* reuses the generic card styles but allows fine-tuning */
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: start;
+  grid-template-columns: repeat(4, 1fr);
+  display: grid;
+}
+
+/* //Adding Color Untop the cards */
+.stat-card:nth-child(1) {
+  border-top:  5px  solid #8b19d2;
+}
+.stat-card:nth-child(2) {
+  border-top: 5px solid #d21abc;
+}
+.stat-card:nth-child(3) {
+  border-top: 5px solid #d21976;
+}
+.stat-card:nth-child(4) {
+  border-top: 5px solid #d21919;
 }
 
 .list-card {
@@ -99,6 +115,10 @@ section > div {
   width: 100%;
   max-width: 420px;
   padding: 0.75rem 1rem;
+  background: #ffffff;
+  border: 1px solid rgba(99, 102, 241, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(17, 24, 39, 0.06);
 }
 
 .list-heading {
@@ -109,6 +129,21 @@ section > div {
   padding-bottom: 0.45rem;
   border-bottom: 1px solid rgba(16, 24, 40, 0.03);
   margin-bottom: 0.5rem;
+}
+
+select{
+  padding: 0.35rem 0.7rem;
+  font-size: 0.9rem;
+  color: #6b21a8;
+  border-radius: 8px;
+  border: 1px solid #8b19d2;
+  background: rgba(139, 25, 210, 0.04);
+}
+
+select:focus {
+  outline: 3px solid rgba(107, 33, 168, 0.12);
+  outline-offset: 2px;
+  border-radius: 8px;
 }
 
 .list-item {

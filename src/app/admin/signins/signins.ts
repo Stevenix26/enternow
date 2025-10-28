@@ -17,7 +17,7 @@ const staffData: StaffElement[] = [
     staffId: 'Staff ID 1023',
   },
   { name: 'Sayo', department: 'Sales', count: '1/5', signin: true, staffId: 'Staff ID 1023' },
-  { name: 'Segun', department: 'Production', count: '2/5', signin: true, staffId: 'Staff ID 1023' },
+  { name: 'Segun', department: 'Production', count: '2/5', signin: false, staffId: 'Staff ID 1023' },
   {
     name: 'Able',
     department: 'Human Resources',

@@ -6,6 +6,7 @@ import { App } from './app';
 import { Header } from './components/header/header';
 import { MaterialModule } from './material/material-module';
 import { ReactiveFormsModule} from '@angular/forms';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 
 
 
@@ -19,9 +20,11 @@ import { ReactiveFormsModule} from '@angular/forms';
     AppRoutingModule, //import the app routing module
     MaterialModule, //import the material module
     ReactiveFormsModule,
+    // HttpClientModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners() //provide global error listeners for the browser
+    provideBrowserGlobalErrorListeners(),  //provide global error listeners for the browser
+    provideHttpClient()
   ],
   bootstrap: [App] //bootstrap the app component
 })
