@@ -1,5 +1,12 @@
 table {
   width: 100%;
+  box-shadow: 0 8px 20px rgba(17, 24, 39, 0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(99, 102, 241, 0.08);
+  background: #ffffff;
+  padding: 10px;
+
 }
 
 .mat-mdc-row .mat-mdc-cell {
@@ -10,8 +17,19 @@ table {
 
 .mat-mdc-row:hover .mat-mdc-cell {
   border-color: currentColor;
+  background-color: #6b21a8;
+  /* border-radius: 10px; */
+  color: #ffffff;
+  outline: 1px solid rgba(107, 33, 168, 0.12);
+  outline-offset: 2px;
+  /* transform: scaleY(2); */
+  /* background-color: rgba(99, 102, 241, 0.08); */
 }
 
 .demo-row-is-clicked {
   font-weight: bold;
 }
+
+/*
+  --primary: #6b21a8;
+  --accent: #8b19d2; */

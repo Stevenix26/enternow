@@ -2,12 +2,11 @@
   <!-- <app-admin-header></app-admin-header> -->
   <div class="top-headers">
     <p>Welcome, {{ name }} 🌄</p>
-    
     <select name="filter" id="filter">
       <option *ngFor="let filters of filter" [value]="filters">{{ filters }}</option>
     </select>
   </div>
-  <section>
+  <section class="stats">
     <!-- Stats: value first, label second to match CSS emphasis -->
     <div class="stat-card" role="region" aria-label="Signins">
       <span>2,000</span>
@@ -51,6 +50,34 @@
       </div>
     </div>
   </section>
+  <div class="create-staff">
+    <button class="btn">Create a staff</button>
+  </div>
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Staff Name</mat-label>
+      <input matInput placeholder="Enter the staff name" value="" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Staff ID</mat-label>
+      <input matInput placeholder="Enter the staff ID" value="GT_2340" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Date & Time</mat-label>
+      <input matInput type="datetime-local" name="date" id="date" />
+    </mat-form-field>
+    
+    <mat-label>Choose a date</mat-label>
+    <input matInput [matDatepicker]="picker" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
 
-
+    <!-- <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Time</mat-label>
+      <input matInput type="time" name="date_time" id="date_time" />
+    </mat-form-field> -->
+    <!-- (click)="submitForm()" -->
+    <button matButton="filled" id="button1">Login</button>
+  </form>
 </main>

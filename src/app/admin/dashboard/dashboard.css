@@ -8,7 +8,7 @@
   --shadow: rgba(17, 24, 39, 0.06);
   --radius: 10px;
   --gap: 1rem;
-  --card-min: 180px;
+  --card-min: 280px;
 }
 
 /* Top header area */
@@ -62,14 +62,39 @@
 /* Summary/statistics section */
 section {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
+  flex-direction: row;
   justify-content: space-evenly;
-  gap: 1.25rem;
+  gap: auto;
   align-items: flex-start;
-  padding: 1.25rem;
-  margin: 30px;
+  padding: 10px;
+  margin: 5px;
 }
 
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.create-staff{
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: flex-end;
+  align-self: flex-end;
+}
+
+.create-staff button{
+  background-color: #8b19d2;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 15px;
+  margin: 10px;
+  /* width: 200px; */
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
 /* Card-like blocks inside section (keeps original selector to avoid HTML changes) */
 section > div {
   display: flex;
@@ -77,8 +102,8 @@ section > div {
   align-items: center;
   justify-content: center;
   min-width: var(--card-min);
-  flex: 1 1 220px;
-  max-width: 300px;
+  /* flex: 1 1 220px; */
+  max-width: 500px;
   padding: 1rem 1.25rem;
   background: #ffffff;
   border: 1px solid rgba(99, 102, 241, 0.08);
@@ -98,7 +123,7 @@ section > div {
 
 /* //Adding Color Untop the cards */
 .stat-card:nth-child(1) {
-  border-top:  5px  solid #8b19d2;
+  border-top: 5px solid #8b19d2;
 }
 .stat-card:nth-child(2) {
   border-top: 5px solid #d21abc;
@@ -131,7 +156,7 @@ section > div {
   margin-bottom: 0.5rem;
 }
 
-select{
+select {
   padding: 0.35rem 0.7rem;
   font-size: 0.9rem;
   color: #6b21a8;
@@ -156,7 +181,7 @@ select:focus {
 }
 
 .muted {
-  color:#6b7280 ;
+  color: #6b7280;
   font-weight: 500;
 }
 
@@ -201,6 +226,16 @@ section > div > div {
   font-weight: 600;
 }
 
+
+.example-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
 /* Responsive tweaks */
 @media (max-width: 900px) {
   section {
@@ -237,5 +272,3 @@ section > div > div {
 .top-headers span {
   line-height: 1;
 }
-
-

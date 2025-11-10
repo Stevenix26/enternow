@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="loginForm" class="login-width">
+  <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="submitForm()"  class="login-width">
     <h4>{{ companyName }}</h4>
     <mat-form-field appearance="outline">
       <mat-label>Staff ID</mat-label>
