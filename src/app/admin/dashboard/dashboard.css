@@ -76,24 +76,37 @@ section {
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
 }
-.create-staff{
+.create-staff {
   display: flex;
   /* flex-direction: column; */
   justify-content: flex-end;
   align-self: flex-end;
 }
 
-.create-staff button{
+.create-staff .btn {
   background-color: #8b19d2;
+  /* background: linear-gradient(180deg, rgba(107, 33, 168, 0.08), rgba(139, 25, 210, 0.03)); */
   color: #ffffff;
   font-weight: 800;
   font-size: 15px;
   margin: 10px;
   /* width: 200px; */
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
+  justify-content: center;
+  display: flex;
+  gap: 4px;
+}
+.create-staff .btn:hover {
+  cursor: pointer;
+  border: 1px solid #8b19d2;
+  border-radius: 10px;
+  color: #8b19d2;
+  background: linear-gradient(180deg, rgba(107, 33, 168, 0.08), rgba(139, 25, 210, 0.03));
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.08);
 }
 /* Card-like blocks inside section (keeps original selector to avoid HTML changes) */
 section > div {
@@ -226,7 +239,6 @@ section > div > div {
   font-weight: 600;
 }
 
-
 .example-form {
   display: flex;
   flex-direction: column;
@@ -271,4 +283,14 @@ section > div > div {
 .top-headers p,
 .top-headers span {
   line-height: 1;
+}
+
+.example-card {
+  margin: 20px;
+  padding: 20px;
+  max-width: fit-content;
+  border: 1px solid #8b19d2;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(17, 24, 39, 0.06);
+  width: 100%;
 }

@@ -1,25 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, inject, Signal, ChangeDetectionStrategy } from '@angular/core';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 interface StaffMember {
   name: string;
   department: string;
   count: string;
 }
 
-
 @Component({
   selector: 'app-dashboard',
   standalone: false,
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Dashboard implements OnInit {
   // constructor() {}
- 
+
   name: string = 'Steven';
 
-
   filter: string[] = ['All', 'Active', 'Inactive'];
+
+  department: string[] = [
+    'Administration',
+    'Sales',
+    'Production',
+    'Human Resources',
+    'Accounting',
+    'Procurement',
+    'Legal',
+    'IT',
+  ];
 
   // Combined staff and department into a single array of objects
   staffList: StaffMember[] = [
@@ -30,8 +40,34 @@ export class Dashboard implements OnInit {
     { name: 'Janet', department: 'IT', count: '3/5' },
   ];
 
-  
+  showModal = false;
+  showMessage = false;
 
+  openModal() {
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+  }
+
+  staffDetails = {
+    StaffID: '',
+    Department: '',
+    Email: '',
+    signedInTme: '',
+    signedOutTime: '',
+  };
+
+  readonly dialog = inject(MatDialog);
+
+  openDialog() {
+    const dialogRef = this.dialog.open(Dashboard, {});
+    dialogRef.componentInstance.staffDetails = this.staffDetails;
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
   // constructor() {}
 
   // Function to get a random staff member and department
@@ -55,7 +91,6 @@ export class Dashboard implements OnInit {
     'Legal',
     'IT',
   ];
-  
 
   ngOnInit(): void {
     // Add any initialization logic here

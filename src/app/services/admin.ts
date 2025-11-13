@@ -13,6 +13,7 @@ export class Admin {
     return this.httpClient.get<IStaff[]>('https://jsonplaceholder.typicode.com/users'); //this.httpClient.get<IStaff>('https://jsonplaceholder.typicode.com/users');
   }
 
+
   createStaff(staff: IStaff): Observable<IStaff> {
     return this.httpClient.post<IStaff>('https://jsonplaceholder.typicode.com/users', staff);
   }

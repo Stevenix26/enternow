@@ -2,7 +2,7 @@
   <!-- <app-admin-header></app-admin-header> -->
   <div class="top-headers">
     <p>Welcome, {{ name }} 🌄</p>
-    <select name="filter" id="filter">
+    <select matNativeControl name="filter" id="filter">
       <option *ngFor="let filters of filter" [value]="filters">{{ filters }}</option>
     </select>
   </div>
@@ -51,33 +51,49 @@
     </div>
   </section>
   <div class="create-staff">
-    <button class="btn">Create a staff</button>
+    <button class="btn" (click)="openDialog()">
+      Create a staff
+      <mat-icon>people</mat-icon>
+    </button>
   </div>
-  <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>Staff Name</mat-label>
-      <input matInput placeholder="Enter the staff name" value="" />
-    </mat-form-field>
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>Staff ID</mat-label>
-      <input matInput placeholder="Enter the staff ID" value="GT_2340" />
-    </mat-form-field>
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>Date & Time</mat-label>
-      <input matInput type="datetime-local" name="date" id="date" />
-    </mat-form-field>
-    
-    <mat-label>Choose a date</mat-label>
-    <input matInput [matDatepicker]="picker" />
-    <mat-hint>MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
 
-    <!-- <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>Time</mat-label>
-      <input matInput type="time" name="date_time" id="date_time" />
-    </mat-form-field> -->
-    <!-- (click)="submitForm()" -->
-    <button matButton="filled" id="button1">Login</button>
-  </form>
+  <!-- //creating a modal -->
+  <mat-dialog-content class="example-car" appearance="outlined">
+    <form class="example-form">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Staff Name</mat-label>
+        <input matInput placeholder="Enter the staff name" value="" />
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Staff ID</mat-label>
+        <input matInput placeholder="Enter the staff ID" value="GT_2340" />
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Department</mat-label>
+        <select matNativeControl>
+          <option *ngFor="let dep of department" [value]="dep">{{ dep }}</option>
+        </select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Date & Time</mat-label>
+        <input matInput type="datetime-local" name="date" id="date" />
+      </mat-form-field>
+
+      <!-- <mat-form-field appearance="outline">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field> -->
+      <button matButton="filled" id="button1">
+        <mat-icon>login</mat-icon>
+        Login
+      </button>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button matButton mat-dialog-close>Cancel</button>
+    <button matButton [mat-dialog-close]="true" cdkFocusInitial>Submit</button>
+  </mat-dialog-actions>
 </main>

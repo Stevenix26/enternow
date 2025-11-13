@@ -1,1 +1,4 @@
-<p>staff works!</p>
+<mat-card  *ngFor="let staff of staffDetails2">
+  <mat-card-title>Staff Daily Report</mat-card-title>
+  <mat-card-content> {{staff.name}} </mat-card-content>
+</mat-card>
