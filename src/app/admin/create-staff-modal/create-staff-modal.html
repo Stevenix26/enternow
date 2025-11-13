@@ -1,0 +1,75 @@
+<h2 mat-dialog-title>Register New Staff</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="staffForm">
+    <!-- Staff Name -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Staff Name</mat-label>
+      <input matInput formControlName="staffName" placeholder="Enter staff name" />
+      <mat-error *ngIf="staffForm.get('staffName')?.hasError('required')">
+        Staff name is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Staff ID -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Staff ID</mat-label>
+      <input matInput formControlName="staffId" placeholder="Enter staff ID" />
+      <mat-error *ngIf="staffForm.get('staffId')?.hasError('required')">
+        Staff ID is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Department -->
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Department</mat-label>
+      <mat-select matNativeControl formControlName="department">
+        <mat-option *ngFor="let dep of department" [value]="dep">{{ dep }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="staffForm.get('department')?.hasError('required')">
+        Department is required
+      </mat-error>
+    </mat-form-field>
+    <!-- <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Department</mat-label>
+      <mat-select formControlName="department">
+        <mat-option value="">Select Department</mat-option>
+        <mat-option value="IT">IT</mat-option>
+        <mat-option value="HR">HR</mat-option>
+        <mat-option value="Finance">Finance</mat-option>
+        <mat-option value="Marketing">Marketing</mat-option>
+        <mat-option value="Operations">Operations</mat-option>
+      </mat-select>
+      <mat-error *ngIf="staffForm.get('department')?.hasError('required')">
+        Department is required
+      </mat-error>
+    </mat-form-field> -->
+
+    <!-- Date and Time -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Date and Time</mat-label>
+      <input matInput type="datetime-local" formControlName="dateTime" />
+      <mat-error *ngIf="staffForm.get('dateTime')?.hasError('required')">
+        Date and time is required
+      </mat-error>
+    </mat-form-field>
+  </form>
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Registering staff...</p>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSubmit()"
+    [disabled]="!staffForm.valid || isLoading"
+  >
+    <span *ngIf="!isLoading">Submit</span>
+    <span *ngIf="isLoading">Submitting...</span>
+  </button>
+</mat-dialog-actions>

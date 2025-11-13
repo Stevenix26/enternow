@@ -1,0 +1,150 @@
+<div class="modal-header">
+  <div class="header-content">
+    <div class="staff-avatar">
+      <mat-icon>account_circle</mat-icon>
+    </div>
+    <div class="staff-info">
+      <h2>{{ staff.staffName }}</h2>
+      <p class="staff-id">{{ staff.staffId }}</p>
+      <mat-chip class="department-chip">{{ staff.department }}</mat-chip>
+    </div>
+  </div>
+  <button mat-icon-button (click)="close()" class="close-button">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <!-- Statistics Cards -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon primary">
+        <mat-icon>login</mat-icon>
+      </div>
+      <div class="stat-details">
+        <p class="stat-label">Total Sign-ins</p>
+        <h3 class="stat-value">{{ staff.signInCount || 0 }}</h3>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon warning">
+        <mat-icon>schedule</mat-icon>
+      </div>
+      <div class="stat-details">
+        <p class="stat-label">Times Late</p>
+        <h3 class="stat-value">{{ staff.latenessCount || 0 }}</h3>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon danger">
+        <mat-icon>money_off</mat-icon>
+      </div>
+      <div class="stat-details">
+        <p class="stat-label">Total Deductions</p>
+        <h3 class="stat-value">{{ formatCurrency(staff.totalDeductions || 0) }}</h3>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon success">
+        <mat-icon>trending_up</mat-icon>
+      </div>
+      <div class="stat-details">
+        <p class="stat-label">Attendance Rate</p>
+        <h3 class="stat-value">{{ attendanceRate }}%</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sign-In History Section -->
+  <div class="history-section">
+    <h3 class="section-title">
+      <mat-icon>history</mat-icon>
+      Sign-In History
+    </h3>
+
+    <div *ngIf="!staff.signInHistory || staff.signInHistory.length === 0" class="no-history">
+      <mat-icon>event_busy</mat-icon>
+      <p>No sign-in history available for this staff member.</p>
+    </div>
+
+    <div *ngIf="staff.signInHistory && staff.signInHistory.length > 0" class="history-table-container">
+      <table mat-table [dataSource]="staff.signInHistory" class="history-table">
+        
+        <!-- Date Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let record">
+            <div class="date-cell">
+              <mat-icon class="date-icon">event</mat-icon>
+              {{ formatDate(record.date) }}
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Time In Column -->
+        <ng-container matColumnDef="timeIn">
+          <th mat-header-cell *matHeaderCellDef>Time In</th>
+          <td mat-cell *matCellDef="let record">
+            <span class="time-badge in">{{ record.timeIn }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Time Out Column -->
+        <ng-container matColumnDef="timeOut">
+          <th mat-header-cell *matHeaderCellDef>Time Out</th>
+          <td mat-cell *matCellDef="let record">
+            <span class="time-badge out">{{ record.timeOut || 'N/A' }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Hours Worked Column -->
+        <ng-container matColumnDef="hoursWorked">
+          <th mat-header-cell *matHeaderCellDef>Hours Worked</th>
+          <td mat-cell *matCellDef="let record">
+            {{ calculateHoursWorked(record.timeIn, record.timeOut) }}
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let record">
+            <span class="status-badge" [ngClass]="getStatusClass(record.status)">
+              <mat-icon>{{ getStatusIcon(record.status) }}</mat-icon>
+              {{ record.status }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Late By Column -->
+        <ng-container matColumnDef="lateBy">
+          <th mat-header-cell *matHeaderCellDef>Late By</th>
+          <td mat-cell *matCellDef="let record">
+            <span *ngIf="record.isLate" class="late-text">{{ record.lateBy || 'N/A' }}</span>
+            <span *ngIf="!record.isLate" class="on-time">-</span>
+          </td>
+        </ng-container>
+
+        <!-- Deduction Column -->
+        <ng-container matColumnDef="deduction">
+          <th mat-header-cell *matHeaderCellDef>Deduction</th>
+          <td mat-cell *matCellDef="let record">
+            <span class="deduction-amount" [class.zero]="record.deduction === 0">
+              {{ formatCurrency(record.deduction || 0) }}
+            </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="history-row"></tr>
+      </table>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="close()">Close</button>
+</mat-dialog-actions>

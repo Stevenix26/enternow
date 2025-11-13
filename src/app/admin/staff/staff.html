@@ -1,4 +1,129 @@
-<mat-card  *ngFor="let staff of staffDetails2">
-  <mat-card-title>Staff Daily Report</mat-card-title>
-  <mat-card-content> {{staff.name}} </mat-card-content>
-</mat-card>
+<div class="staff-container">
+  <h1 class="page-title">Staff Management</h1>
+
+  <!-- Overall Statistics Cards -->
+  <div class="stats-container">
+    <mat-card class="stat-card primary">
+      <mat-card-content>
+        <div class="stat-icon">
+          <mat-icon>person</mat-icon>
+        </div>
+        <div class="stat-info">
+          <h3>Total Sign-ins</h3>
+          <p class="stat-number">{{ totalSignIns }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card warning">
+      <mat-card-content>
+        <div class="stat-icon">
+          <mat-icon>schedule</mat-icon>
+        </div>
+        <div class="stat-info">
+          <h3>Total Lateness</h3>
+          <p class="stat-number">{{ totalLateness }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card danger">
+      <mat-card-content>
+        <div class="stat-icon">
+          <mat-icon>money_off</mat-icon>
+        </div>
+        <div class="stat-info">
+          <h3>Total Deductions</h3>
+          <p class="stat-number">{{ formatCurrency(totalDeductions) }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Staff Table -->
+  <mat-card class="table-card">
+    <mat-card-header>
+      <mat-card-title>Staff List</mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div *ngIf="staffList.length === 0" class="no-data">
+        <mat-icon>people_outline</mat-icon>
+        <p>No staff members found. Please register staff from the dashboard.</p>
+      </div>
+
+      <div *ngIf="staffList.length > 0" class="table-container">
+        <table mat-table [dataSource]="staffList" class="staff-table">
+          
+          <!-- Staff Name Column -->
+          <ng-container matColumnDef="staffName">
+            <th mat-header-cell *matHeaderCellDef>Staff Name</th>
+            <td mat-cell *matCellDef="let staff">
+              <div class="staff-name-cell">
+                <mat-icon class="staff-icon">account_circle</mat-icon>
+                <span>{{ staff.staffName }}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Staff ID Column -->
+          <ng-container matColumnDef="staffId">
+            <th mat-header-cell *matHeaderCellDef>Staff ID</th>
+            <td mat-cell *matCellDef="let staff">
+              <span class="staff-id">{{ staff.staffId }}</span>
+            </td>
+          </ng-container>
+
+          <!-- Department Column -->
+          <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef>Department</th>
+            <td mat-cell *matCellDef="let staff">
+              <mat-chip class="department-chip">{{ staff.department }}</mat-chip>
+            </td>
+          </ng-container>
+
+          <!-- Sign-in Count Column -->
+          <ng-container matColumnDef="signInCount">
+            <th mat-header-cell *matHeaderCellDef>Sign-ins</th>
+            <td mat-cell *matCellDef="let staff">
+              <span class="count-badge success">{{ staff.signInCount || 0 }}</span>
+            </td>
+          </ng-container>
+
+          <!-- Lateness Count Column -->
+          <ng-container matColumnDef="latenessCount">
+            <th mat-header-cell *matHeaderCellDef>Late</th>
+            <td mat-cell *matCellDef="let staff">
+              <span class="count-badge warning">{{ staff.latenessCount || 0 }}</span>
+            </td>
+          </ng-container>
+
+          <!-- Total Deductions Column -->
+          <ng-container matColumnDef="totalDeductions">
+            <th mat-header-cell *matHeaderCellDef>Deductions</th>
+            <td mat-cell *matCellDef="let staff">
+              <span class="deduction-amount">{{ formatCurrency(staff.totalDeductions || 0) }}</span>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let staff">
+              <button 
+                mat-icon-button 
+                color="primary" 
+                (click)="viewStaffDetails(staff)"
+                matTooltip="View Details">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

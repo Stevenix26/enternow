@@ -25,7 +25,6 @@
       <span>Suspension</span>
     </div>
   </section>
-
   <section>
     <!-- Two list cards: keep the inner row structure so CSS still applies -->
     <div class="list-card" role="group" aria-label="Top earliest staff">
@@ -50,50 +49,88 @@
       </div>
     </div>
   </section>
+
+  //
   <div class="create-staff">
-    <button class="btn" (click)="openDialog()">
-      Create a staff
-      <mat-icon>people</mat-icon>
+    <button class="btn" (click)="openCreateStaffModal()">
+      <mat-icon>add</mat-icon>
+      Create staff
+    </button>
+
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="clearAllStaff()"
+      *ngIf="staffDetails.length > 0"
+    >
+      Clear All Staff
     </button>
   </div>
+  <!-- Staff List Display -->
+  <div class="table-container">
+    <!-- <div class="registered-staff-section"> -->
 
-  <!-- //creating a modal -->
-  <mat-dialog-content class="example-car" appearance="outlined">
-    <form class="example-form">
-      <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Staff Name</mat-label>
-        <input matInput placeholder="Enter the staff name" value="" />
-      </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Staff ID</mat-label>
-        <input matInput placeholder="Enter the staff ID" value="GT_2340" />
-      </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Department</mat-label>
-        <select matNativeControl>
-          <option *ngFor="let dep of department" [value]="dep">{{ dep }}</option>
-        </select>
-      </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Date & Time</mat-label>
-        <input matInput type="datetime-local" name="date" id="date" />
-      </mat-form-field>
+    <!-- Registered Staff Table -->
+    <h2>Registered Staff</h2>
 
-      <!-- <mat-form-field appearance="outline">
-        <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker" />
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field> -->
-      <button matButton="filled" id="button1">
-        <mat-icon>login</mat-icon>
-        Login
-      </button>
-    </form>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button matButton mat-dialog-close>Cancel</button>
-    <button matButton [mat-dialog-close]="true" cdkFocusInitial>Submit</button>
-  </mat-dialog-actions>
+    <!-- //length of staff register -->
+    <div class="registered-staff" *ngIf="staffDetails.length > 0" align="left">
+      <span>Registered Staff: {{ staffDetails.length }}</span>
+    </div>
+
+    <div *ngIf="staffDetails.length === 0" class="no-data">
+      <p>No staff registered yet. Click "Create Staff" to register.</p>
+    </div>
+
+    <table
+      mat-table
+      [dataSource]="staffDetails"
+      *ngIf="staffDetails.length > 0"
+      class="staff-table"
+    >
+      <!-- Staff Name Column -->
+      <ng-container matColumnDef="staffName">
+        <th mat-header-cell *matHeaderCellDef>Staff Name</th>
+        <td mat-cell *matCellDef="let staff">{{ staff.staffName }}</td>
+      </ng-container>
+
+      <!-- Staff ID Column -->
+      <ng-container matColumnDef="staffId">
+        <th mat-header-cell *matHeaderCellDef>Staff ID</th>
+        <td mat-cell *matCellDef="let staff">{{ staff.staffId }}</td>
+      </ng-container>
+
+      <!-- Department Column -->
+      <ng-container matColumnDef="department">
+        <th mat-header-cell *matHeaderCellDef>Department</th>
+        <td mat-cell *matCellDef="let staff">{{ staff.department }}</td>
+      </ng-container>
+
+      <!-- Date & Time Column -->
+      <ng-container matColumnDef="dateTime">
+        <th mat-header-cell *matHeaderCellDef>Registration Date/Time</th>
+        <td mat-cell *matCellDef="let staff">{{ formatDateTime(staff.dateTime) }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <!-- <div *ngIf="staffDetails.length === 0" class="no-staff">
+    <p>No staff registered yet. Click "Create Staff" to register.</p>
+  </div>
+
+  <div *ngIf="staffDetails.length > 0" class="staff-grid">
+    <mat-card *ngFor="let staff of staffDetails" class="staff-card">
+      <mat-card-header>
+        <mat-card-title>{{ staff.staffName }}</mat-card-title>
+        <mat-card-subtitle>{{ staff.department }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>Staff ID:</strong> {{ staff.staffId }}</p>
+        <p><strong>Department:</strong> {{ staff.department }}</p>
+        <p><strong>Registered:</strong> {{ staff.dateTime }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div> -->
+  </div>
 </main>

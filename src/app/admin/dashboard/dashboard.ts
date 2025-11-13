@@ -1,5 +1,15 @@
-import { Component, OnInit, inject, Signal, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  Signal,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { CreateStaffModal } from '../create-staff-modal/create-staff-modal';
+import { IStaff, IStaffRegistration } from '../../interfaces/staff';
+import { Admin } from '../../services/admin';
 interface StaffMember {
   name: string;
   department: string;
@@ -14,7 +24,14 @@ interface StaffMember {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Dashboard implements OnInit {
-  // constructor() {}
+  constructor(
+    private adminService: Admin,
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  // LocalStorage key
+  private readonly STORAGE_KEY = 'registeredStaff';
 
   name: string = 'Steven';
 
@@ -39,35 +56,95 @@ export class Dashboard implements OnInit {
     { name: 'Able', department: 'Human Resources', count: '4/5' },
     { name: 'Janet', department: 'IT', count: '3/5' },
   ];
+  staffDetails: IStaffRegistration[] = [];
+  // Define table columns
+  displayedColumns: string[] = ['staffName', 'staffId', 'department', 'dateTime'];
+  // showModal = false;
+  // showMessage = false;
 
-  showModal = false;
-  showMessage = false;
+  // openModal() {
+  //   this.showModal = true;
+  // }
 
-  openModal() {
-    this.showModal = true;
-  }
+  // closeModal() {
+  //   this.showModal = false;
+  // }
 
-  closeModal() {
-    this.showModal = false;
-  }
+  // staffDetails = {
+  //   StaffID: '',
+  //   Department: '',
+  //   Email: '',
+  //   signedInTme: '',
+  //   signedOutTime: '',
+  // };
 
-  staffDetails = {
-    StaffID: '',
-    Department: '',
-    Email: '',
-    signedInTme: '',
-    signedOutTime: '',
-  };
+  openCreateStaffModal() {
+    const dialogRef = this.dialog.open(CreateStaffModal, {
+      width: '500px',
+    });
 
-  readonly dialog = inject(MatDialog);
-
-  openDialog() {
-    const dialogRef = this.dialog.open(Dashboard, {});
-    dialogRef.componentInstance.staffDetails = this.staffDetails;
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+      if (result) {
+        this.staffDetails = [...this.staffDetails, result]; // This triggers change detection
+        this.saveStaffToLocalStorage();
+        this.cdr.markForCheck();
+        console.log('Updated Staff Details:', this.staffDetails);
+      }
     });
   }
+  // Format the datetime string for display
+  formatDateTime(dateTimeString: string): string {
+    if (!dateTimeString) return 'N/A';
+
+    const date = new Date(dateTimeString);
+
+    // Format: "Dec 15, 2024 at 2:30 PM"
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    };
+
+    return date.toLocaleString('en-US', options);
+  }
+
+  // Save staff data to localStorage
+  private saveStaffToLocalStorage(): void {
+    try {
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.staffDetails));
+      console.log('Staff data saved to localStorage');
+    } catch (error) {
+      console.error('Error saving to localStorage:', error);
+    }
+  }
+
+  // Load staff data from localStorage
+  private loadStaffFromLocalStorage(): void {
+    try {
+      const storedData = localStorage.getItem(this.STORAGE_KEY);
+      if (storedData) {
+        this.staffDetails = JSON.parse(storedData);
+        console.log('Staff data loaded from localStorage:', this.staffDetails);
+      }
+    } catch (error) {
+      console.error('Error loading from localStorage:', error);
+      this.staffDetails = [];
+    }
+  }
+
+  // Optional: Clear all staff data (useful for testing or reset functionality)
+  clearAllStaff(): void {
+    if (confirm('Are you sure you want to clear all staff data?')) {
+      this.staffDetails = [];
+      localStorage.removeItem(this.STORAGE_KEY);
+      this.cdr.markForCheck();
+      console.log('All staff data cleared');
+    }
+  }
+
   // constructor() {}
 
   // Function to get a random staff member and department
@@ -93,6 +170,6 @@ export class Dashboard implements OnInit {
   ];
 
   ngOnInit(): void {
-    // Add any initialization logic here
+    this.loadStaffFromLocalStorage();
   }
 }
