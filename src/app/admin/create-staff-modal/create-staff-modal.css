@@ -18,10 +18,11 @@ mat-dialog-content {
   scrollbar-width: thin;
   scrollbar-color: #efd9fc #ffffff;
   justify-content: center;
+  position: relative;
 }
 
-.loading-overlay {
-  /* position: absolute; */
+/* .loading-overlay {
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -31,6 +32,80 @@ mat-dialog-content {
   flex-direction: column;
   align-items: start;
   justify-content: start;
+  z-index: 1000;
+}
+
+.loading-overlay p {
+  margin-top: 16px;
+  color: #666;
+  font-weight: 500;
+} */
+
+
+
+/* Lateness Warning */
+.lateness-warning {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: #fff3e0;
+  border: 2px solid #ff9800;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lateness-warning mat-icon {
+  color: #ff9800;
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.warning-content {
+  flex: 1;
+}
+
+.warning-title {
+  margin: 0 0 8px 0;
+  font-weight: 600;
+  color: #e65100;
+  font-size: 14px;
+}
+
+.warning-detail {
+  margin: 4px 0;
+  font-size: 13px;
+  color: #666;
+}
+
+.warning-detail strong {
+  color: #d84315;
+  font-weight: 600;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   z-index: 1000;
 }
 

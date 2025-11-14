@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 24px;
+  padding: 34px;
   background: linear-gradient(135deg, #8b19d2 0%, #6a0dad 100%);
   color: white;
   border-radius: 12px 12px 0 0;
@@ -43,13 +43,15 @@
   margin: 0 0 12px 0;
   font-size: 14px;
   opacity: 0.9;
-  font-family: 'Courier New', monospace;
+  /* font-family: 'Courier New', monospace; */
 }
+mat-chip {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffff;
+  font-weight: 800;
+  /* width: 1000px; */
+  font-size: 45px;
 
-.staff-info .department-chip {
-  background: rgba(255, 255, 255, 0.2) !important;
-  color: white !important;
-  font-weight: 500;
 }
 
 .close-button {
@@ -309,7 +311,7 @@ mat-dialog-actions {
   .stats-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .history-table-container {
     overflow-x: scroll;
   }

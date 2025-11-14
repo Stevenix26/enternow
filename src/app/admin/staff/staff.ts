@@ -38,6 +38,7 @@ export class Staff implements OnInit {
     'staffName',
     'staffId',
     'department',
+    'lastSignIn',
     'signInCount',
     'latenessCount',
     'totalDeductions',
@@ -110,7 +111,7 @@ export class Staff implements OnInit {
     });
   }
 
-    formatCurrency(amount: number): string {
+  formatCurrency(amount: number): string {
     return `₦${amount.toLocaleString()}`;
   }
 }

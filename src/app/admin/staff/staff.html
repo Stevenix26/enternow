@@ -82,6 +82,14 @@
             </td>
           </ng-container>
 
+          <!-- Last Sign-in Column -->
+          <ng-container matColumnDef="lastSignIn">
+            <th mat-header-cell *matHeaderCellDef>Last Sign-in</th>
+            <td mat-cell *matCellDef="let staff">
+              <span>{{ staff.lastSignIn ? (staff.lastSignIn | date:'short') : '—' }}</span>
+            </td>
+          </ng-container>
+
           <!-- Sign-in Count Column -->
           <ng-container matColumnDef="signInCount">
             <th mat-header-cell *matHeaderCellDef>Sign-ins</th>

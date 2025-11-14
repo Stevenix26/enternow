@@ -6,7 +6,10 @@
     <div class="staff-info">
       <h2>{{ staff.staffName }}</h2>
       <p class="staff-id">{{ staff.staffId }}</p>
-      <mat-chip class="department-chip">{{ staff.department }}</mat-chip>
+      <mat-chip class="department-chi"
+      id="department-chip">
+       {{ staff.department }}
+      </mat-chip>
     </div>
   </div>
   <button mat-icon-button (click)="close()" class="close-button">
@@ -72,7 +75,7 @@
 
     <div *ngIf="staff.signInHistory && staff.signInHistory.length > 0" class="history-table-container">
       <table mat-table [dataSource]="staff.signInHistory" class="history-table">
-        
+
         <!-- Date Column -->
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef>Date</th>

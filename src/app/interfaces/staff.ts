@@ -26,6 +26,16 @@ export interface ICompany {
   bs: string;
 }
 
+// export interface SignInRecord {
+//   date: string;
+//   timeIn: string;
+//   timeOut?: string;
+//   isLate: boolean;
+//   deduction?: number;
+//   status: 'Present' | 'Late' | 'Absent';
+//   lateBy?: string;
+// }
+
 export interface IStaffRegistration {
   staffName: string;
   staffId: string;
@@ -34,15 +44,31 @@ export interface IStaffRegistration {
   signInCount?: number;
   latenessCount?: number;
   totalDeductions?: number;
+  isLate?: boolean;
+  lateBy?: string;
+  deduction?: number;
+  status?: 'Present' | 'Late';
+  lastSignIn?: string;
   signInHistory?: SignInRecord[];
 }
 
 
 export interface SignInRecord {
+  id: string;
   date: string;
   timeIn: string;
-  timeOut?: string;
+  timeOut: string | null;
   isLate: boolean;
-  deduction?: number;
+  lateBy?: string;
+  deduction: number;
   status: 'Present' | 'Late' | 'Absent';
+  notes?: string;
 }
+
+export interface WorkSettings {
+  expectedArrivalTime: string;
+  gracePeriodMinutes: number;
+  lateDeductionAmount: number;
+  workingHoursPerDay: number;
+}
+
