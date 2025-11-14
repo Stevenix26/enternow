@@ -10,6 +10,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateStaffModal } from '../create-staff-modal/create-staff-modal';
 import { IStaff, IStaffRegistration } from '../../interfaces/staff';
 import { Admin } from '../../services/admin';
+import { Router } from '@angular/router';
 interface StaffMember {
   name: string;
   department: string;
@@ -27,7 +28,8 @@ export class Dashboard implements OnInit {
   constructor(
     private adminService: Admin,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   // LocalStorage key
@@ -85,9 +87,40 @@ export class Dashboard implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.staffDetails = [...this.staffDetails, result]; // This triggers change detection
+        // Check if staff already exists
+        const existingStaffIndex = this.staffDetails.findIndex(
+          (staff) => staff.staffId === result.staffId
+        );
+        if (existingStaffIndex !== -1) {
+          // Staff exists - add to their sign-in history
+          const existingStaff = this.staffDetails[existingStaffIndex];
+
+          // Update sign-in history
+          if (!existingStaff.signInHistory) {
+            existingStaff.signInHistory = [];
+          }
+          existingStaff.signInHistory.unshift(result.signInHistory[0]);
+
+          // Update counts
+          existingStaff.signInCount = (existingStaff.signInCount || 0) + 1;
+          existingStaff.latenessCount = (existingStaff.latenessCount || 0) + result.latenessCount;
+          existingStaff.totalDeductions =
+            (existingStaff.totalDeductions || 0) + result.totalDeductions;
+
+          // Update the array to trigger change detection
+          this.staffDetails = [...this.staffDetails];
+
+          console.log('Updated existing staff:', existingStaff);
+        } else {
+          // New staff - add to list
+          this.staffDetails = [...this.staffDetails, result];
+          console.log('Added new staff:', result);
+        }
+
+        // this.staffDetails = [...this.staffDetails, result]; // This triggers change detection
         this.saveStaffToLocalStorage();
         this.cdr.markForCheck();
+        this.router.navigate(['/admin/home/staff']);
         console.log('Updated Staff Details:', this.staffDetails);
       }
     });

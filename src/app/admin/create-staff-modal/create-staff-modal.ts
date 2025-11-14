@@ -36,7 +36,7 @@ export class CreateStaffModal implements OnInit {
 
   ngOnInit(): void {
     const now = new Date();
-    const currentDateTime = now.toISOString().slice(0, 16);
+    const currentDateTime = this.toLocalDateTimeInputValue(now);
 
     this.staffForm = this.fb.group({
       staffName: ['', Validators.required],
@@ -117,5 +117,12 @@ export class CreateStaffModal implements OnInit {
 
   formatCurrency(amount: number): string {
     return `₦${amount.toLocaleString()}`;
+  }
+
+  // Format a Date to YYYY-MM-DDTHH:MM in local time for datetime-local inputs
+  private toLocalDateTimeInputValue(date: Date): string {
+    const tzoffset = date.getTimezoneOffset() * 60000; // offset in milliseconds
+    const localISOTime = new Date(date.getTime() - tzoffset).toISOString().slice(0, 16);
+    return localISOTime;
   }
 }

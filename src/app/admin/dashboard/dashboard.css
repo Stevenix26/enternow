@@ -78,9 +78,8 @@ section {
 }
 .create-staff {
   display: flex;
-  /* flex-direction: column; */
-  justify-content: start;
-  align-self: flex-end;
+  align-items: center;
+  gap: 10px; /* adjust the gap as needed */
 }
 
 .create-staff .btn {
@@ -101,8 +100,12 @@ section {
   align-items: center;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.06);
   transition: all 0.2s ease-in-out;
-  
+
 }
+.create-staff button {
+  flex: 1; /* make the buttons take equal width */
+}
+
 .create-staff .btn:hover {
   cursor: pointer;
   border: 1px solid #8b19d2;

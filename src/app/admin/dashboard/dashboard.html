@@ -2,27 +2,35 @@
   <!-- <app-admin-header></app-admin-header> -->
   <div class="top-headers">
     <p>Welcome, {{ name }} 🌄</p>
-    <select matNativeControl name="filter" id="filter">
-      <option *ngFor="let filters of filter" [value]="filters">{{ filters }}</option>
-    </select>
+    <!-- Improved filter control with Angular Material -->
+    <mat-form-field appearance="outline">
+      <mat-label>Filter</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let filters of filter" [value]="filters">{{ filters }}</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
   <section class="stats">
     <!-- Stats: value first, label second to match CSS emphasis -->
-    <div class="stat-card" role="region" aria-label="Signins">
-      <span>2,000</span>
-      <span>Signins</span>
+    <div class="stat-card" role="region" aria-label="Sign-ins">
+      <span class="stat-icon"><mat-icon>trending_up</mat-icon></span>
+      <span class="stat-value">2,000</span>
+      <span class="stat-label">Sign-ins</span>
     </div>
     <div class="stat-card" role="region" aria-label="Lateness percentage">
-      <span>5%</span>
-      <span>% Lateness</span>
+      <span class="stat-icon"><mat-icon>schedule</mat-icon></span>
+      <span class="stat-value">5%</span>
+      <span class="stat-label">% Lateness</span>
     </div>
     <div class="stat-card" role="region" aria-label="Early birds percentage">
-      <span>95%</span>
-      <span>Early birds%</span>
+      <span class="stat-icon"><mat-icon>emoji_events</mat-icon></span>
+      <span class="stat-value">95%</span>
+      <span class="stat-label">Early birds</span>
     </div>
     <div class="stat-card" role="region" aria-label="Suspensions">
-      <span>18</span>
-      <span>Suspension</span>
+      <span class="stat-icon"><mat-icon>block</mat-icon></span>
+      <span class="stat-value">18</span>
+      <span class="stat-label">Suspensions</span>
     </div>
   </section>
   <section>
@@ -32,6 +40,7 @@
         <span>Top Earliest</span>
         <span class="muted">Staff</span>
       </div>
+      <mat-divider></mat-divider>
       <!-- List items with staff and department pairs -->
       <div class="list-item" *ngFor="let staff of staffList">
         <span class="stat-icon">{{ staff.name }}</span>
@@ -43,6 +52,7 @@
         <span>Lateness</span>
         <span class="muted">Count</span>
       </div>
+      <mat-divider></mat-divider>
       <div class="list-item" *ngFor="let staff of staffList">
         <span class="stat-icon">{{ staff.name }}</span>
         <span class="muted">{{ staff.count }}</span>
@@ -53,7 +63,7 @@
   <div class="create-staff">
     <button class="btn" (click)="openCreateStaffModal()">
       <mat-icon>add</mat-icon>
-      Create staff
+      Create staff Sign Ins
     </button>
 
     <button
@@ -121,7 +131,7 @@
   <div *ngIf="staffDetails.length > 0" class="staff-grid">
     <mat-card *ngFor="let staff of staffDetails" class="staff-card">
       <mat-card-header>
-        <mat-card-title>{{ staff.staffName }}</mat-card-title>
+        <mat-card-title>{{ staff.staffName }}</mat-title>
         <mat-card-subtitle>{{ staff.department }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
